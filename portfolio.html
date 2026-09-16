@@ -58,26 +58,40 @@
         
         <div class="portfolio-header">
             <h1 data-translate="page_title">بروفايل اسامة جروب للتسويق الالكتروني</h1>
+            <p style="color: var(--medium-brown); font-size: 1.05rem; margin-top: 10px;" data-translate="pdf_subtitle">الملف التعريفي والكتالوج الرسمي لـ أسامة جروب بصيغة PDF</p>
         </div>
 
-        <main class="pdf-viewer-container">
+        <main class="pdf-viewer-container" style="padding: 30px 20px;">
             <!-- Toolbar -->
             <div class="pdf-toolbar">
                 <div class="pdf-toolbar-info">
-                    <i class="fas fa-file-pdf"></i>
-                    <span data-translate="pdf_title">كتالوج وأعمال أسامة جروب (75 صفحة)</span>
+                    <i class="fas fa-file-pdf" style="font-size: 1.4rem; color: var(--accent-gold);"></i>
+                    <span data-translate="pdf_title">كتالوج وأعمال أسامة جروب للتسويق الإلكتروني (ملف PDF)</span>
                 </div>
                 <div class="pdf-toolbar-actions">
-                    <span id="page-counter" style="font-size: 0.88rem; opacity: 0.9;">75 صفحة</span>
-                    <button id="toggle-grid-btn" class="pdf-toolbar-btn">
-                        <i class="fas fa-th-large"></i> <span data-translate="btn_grid_toggle">تغيير العرض</span>
-                    </button>
+                    <a href="Osama_Group_Profile.pdf" download="بروفايل_أسامة_جروب_للتسويق_الإلكتروني.pdf" class="pdf-toolbar-btn" style="background: var(--gold-gradient); color: var(--primary-dark);">
+                        <i class="fas fa-download"></i> <span data-translate="btn_download_pdf">تحميل ملف الـ PDF الأصلي</span>
+                    </a>
+                    <a href="Osama_Group_Profile.pdf" target="_blank" rel="noopener" class="pdf-toolbar-btn">
+                        <i class="fas fa-external-link-alt"></i> <span data-translate="btn_open_pdf">فتح الكتالوج بالكامل</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- PDF Pages Flow Container -->
-            <div id="pdf-pages-container" class="pdf-document-flow">
-                <!-- Pages will be dynamically rendered here -->
+            <!-- PDF Viewer Element -->
+            <div class="pdf-embed-wrapper" style="position: relative; width: 100%; max-width: 1100px; margin: 0 auto; min-height: 850px; background: #1b140d; border-radius: 18px; overflow: hidden; border: 1px solid var(--accent-gold); box-shadow: var(--shadow-md);">
+                <object data="Osama_Group_Profile.pdf#toolbar=1&navpanes=1&view=FitH" type="application/pdf" width="100%" height="880px">
+                    <iframe src="Osama_Group_Profile.pdf#toolbar=1&navpanes=1&view=FitH" width="100%" height="880px" style="border: none;">
+                        <div style="text-align: center; padding: 60px 20px; color: #FFFFFF;">
+                            <i class="fas fa-file-pdf" style="font-size: 3rem; color: var(--accent-gold); margin-bottom: 15px;"></i>
+                            <p style="font-size: 1.2rem; font-weight: 700;">الملف التعريفي والبروفايل جاهز للعرض والتحميل</p>
+                            <div style="margin-top: 25px;">
+                                <a href="Osama_Group_Profile.pdf" download="بروفايل_أسامة_جروب.pdf" class="btn primary" style="margin: 5px;">تحميل ملف الـ PDF</a>
+                                <a href="Osama_Group_Profile.pdf" target="_blank" class="btn secondary" style="margin: 5px;">فتح الكتالوج بصفحة كاملة</a>
+                            </div>
+                        </div>
+                    </iframe>
+                </object>
             </div>
         </main>
     </div>
@@ -88,7 +102,7 @@
 
     <footer>
         <div class="footer-container">
-            <p class="copyright-text">&copy; 2024 <a href="index.html#hero-section" class="footer-name-link" data-translate="name_footer">أسامة عمران أحمد</a>. <span data-translate="all_rights">جميع الحقوق محفوظة.</span></p>
+            <p class="copyright-text">&copy; 2024 <a href="index.html#hero-section" class="footer-name-link" data-translate="name_footer">أسامة عمران أحمد</a>. <span data-translate="all_rights">جميع الحقوق محفوظة لـ أسامة جروب.</span></p>
             <p class="developer-info">
                 <span data-translate="dev_text">تم التصميم والتطوير بواسطة: سامح رضا</span>
                 <span class="dev-icons">
@@ -104,25 +118,24 @@
     </footer>
 
     <script>
-        const totalPages = 75;
-        const pdfPages = Array.from({length: totalPages}, (_, i) => `pdf_images/page_${i+1}.png`);
-        let currentLightboxIndex = 0;
-        let isGridView = false;
-
         const languageContent = {
             ar: {
                 name: "أسامة عمران أحمد", page_title: "بروفايل اسامة جروب للتسويق الالكتروني", menu_home: "الرئيسية", menu_about: "من أنا", menu_services: "خدماتي", menu_portfolio: "بروفايل اسامة جروب للتسويق الالكتروني", menu_articles: "المقالات", menu_testimonials: "آراء العملاء", menu_contact: "تواصل معي",
-                pdf_title: "كتالوج وأعمال <a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">أسامة جروب للتسويق الإلكتروني</a> (75 صفحة)", btn_grid_toggle: "طريقة العرض",
+                pdf_title: "كتالوج وأعمال <a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">أسامة جروب للتسويق الإلكتروني</a> (ملف PDF)",
+                pdf_subtitle: "الملف التعريفي والكتالوج الرسمي لـ أسامة جروب بصيغة PDF",
+                btn_download_pdf: "تحميل ملف الـ PDF الأصلي",
+                btn_open_pdf: "فتح الكتالوج بالكامل",
                 name_footer: "أسامة عمران أحمد", all_rights: "جميع الحقوق محفوظة لـ <a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">أسامة جروب</a>.",
-                dev_text: "تم التصميم والتطوير بواسطة: سامح رضا", dir: "rtl",
-                page_label: "صفحة"
+                dev_text: "تم التصميم والتطوير بواسطة: سامح رضا", dir: "rtl"
             },
             en: {
                 name: "Osama Omran Ahmed", page_title: "Osama Group Profile", menu_home: "Home", menu_about: "About Me", menu_services: "Services", menu_portfolio: "Osama Group Profile", menu_articles: "Articles", menu_testimonials: "Client Reviews", menu_contact: "Contact",
-                pdf_title: "<a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">Osama Group for E-Marketing</a> Catalog (75 Pages)", btn_grid_toggle: "Switch View",
+                pdf_title: "<a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">Osama Group for E-Marketing</a> Catalog (PDF Document)",
+                pdf_subtitle: "Official Profile & Catalog of Osama Group in PDF Format",
+                btn_download_pdf: "Download Original PDF File",
+                btn_open_pdf: "Open Full Catalog",
                 name_footer: "Osama Omran Ahmed", all_rights: "All Rights Reserved for <a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">Osama Group</a>.",
-                dev_text: "Designed and Developed by: Sameh Reda", dir: "ltr",
-                page_label: "Page"
+                dev_text: "Designed and Developed by: Sameh Reda", dir: "ltr"
             }
         };
 
@@ -148,7 +161,6 @@
             langSwitcher.setAttribute('data-lang', lang === 'ar' ? 'en' : 'ar');
             localStorage.setItem('lang', lang);
             currentLang = lang;
-            renderPdfPages();
         }
 
         function initMobileMenu() {
@@ -187,105 +199,7 @@
                 const nextLang = e.target.getAttribute('data-lang');
                 updateContent(nextLang);
             });
-            createLightbox();
         });
-
-        const pagesContainer = document.getElementById('pdf-pages-container');
-        const toggleGridBtn = document.getElementById('toggle-grid-btn');
-
-        toggleGridBtn.addEventListener('click', () => {
-            isGridView = !isGridView;
-            if (isGridView) {
-                pagesContainer.className = 'portfolio-full-grid';
-                pagesContainer.style.maxWidth = '1200px';
-            } else {
-                pagesContainer.className = 'pdf-document-flow';
-                pagesContainer.style.maxWidth = '950px';
-            }
-            renderPdfPages();
-        });
-
-        function renderPdfPages() {
-            pagesContainer.innerHTML = '';
-            const pageText = languageContent[currentLang].page_label || 'Page';
-
-            pdfPages.forEach((src, idx) => {
-                const card = document.createElement('div');
-                card.className = isGridView ? 'portfolio-full-item' : 'pdf-page-card';
-                card.innerHTML = `
-                    <span class="pdf-page-badge">${pageText} ${idx + 1} / ${totalPages}</span>
-                    <img src="${src}" alt="${pageText} ${idx + 1}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x450/4A2C2A/FFFFFF?text=Page+${idx+1}'">
-                `;
-                card.addEventListener('click', () => {
-                    openLightbox(idx);
-                });
-                pagesContainer.appendChild(card);
-            });
-        }
-
-        // --- Lightbox with Prev / Next Navigation ---
-        function createLightbox() {
-            if (document.getElementById('lightbox')) return;
-            const lightboxHTML = `
-                <div id="lightbox" class="lightbox-overlay">
-                    <span class="lightbox-close">&times;</span>
-                    <button class="lightbox-nav lightbox-prev" id="lb-prev">&lang;</button>
-                    <div class="lightbox-content">
-                        <img src="" class="lightbox-image">
-                        <div class="lightbox-caption" id="lb-caption"></div>
-                    </div>
-                    <button class="lightbox-nav lightbox-next" id="lb-next">&rang;</button>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', lightboxHTML);
-
-            const lightbox = document.getElementById('lightbox');
-            const closeBtn = lightbox.querySelector('.lightbox-close');
-            const prevBtn = document.getElementById('lb-prev');
-            const nextBtn = document.getElementById('lb-next');
-
-            const closeLightbox = () => lightbox.classList.remove('visible');
-
-            closeBtn.addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) closeLightbox();
-            });
-
-            prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (currentLightboxIndex > 0) {
-                    openLightbox(currentLightboxIndex - 1);
-                } else {
-                    openLightbox(totalPages - 1);
-                }
-            });
-
-            nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (currentLightboxIndex < totalPages - 1) {
-                    openLightbox(currentLightboxIndex + 1);
-                } else {
-                    openLightbox(0);
-                }
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (!lightbox.classList.contains('visible')) return;
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') prevBtn.click();
-                if (e.key === 'ArrowRight') nextBtn.click();
-            });
-        }
-
-        function openLightbox(index) {
-            const lightbox = document.getElementById('lightbox');
-            if (!lightbox) return;
-            currentLightboxIndex = index;
-            const pageText = languageContent[currentLang].page_label || 'Page';
-            lightbox.querySelector('.lightbox-image').src = pdfPages[index];
-            document.getElementById('lb-caption').textContent = `${pageText} ${index + 1} / ${totalPages}`;
-            lightbox.classList.add('visible');
-        }
     </script>
 </body>
 </html>
