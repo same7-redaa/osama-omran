@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://www.fontstatic.com/f=flat-jooza" />
+    <style>
+        @import url('https://www.fontstatic.com/f=flat-jooza');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body {
+            font-family: 'flat-jooza', 'Cairo', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .text-amber-900 {
+            color: #4A2C2A;
+        }
+        .bg-amber-600 {
+            background-color: #8B4513;
+        }
+        .bg-amber-700 {
+            background-color: #4A2C2A;
+        }
+        .hover\:bg-amber-700:hover {
+            background-color: #5d3929;
+        }
+        .hover\:bg-red-600:hover {
+            background-color: #dc2626;
+        }
+        .border-green-600 {
+            border-color: #16a34a;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc, query } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+        
+        const languageContent = {
+            ar: {
+                login_title: "تسجيل الدخول", login_p: "أدخل بيانات حساب المشرف.",
+                email_label: "البريد الإلكتروني", email_placeholder: "أدخل بريدك الإلكتروني",
+                password_label: "كلمة المرور", password_placeholder: "أدخل كلمة المرور",
+                btn_login: "دخول", nav_title: "لوحة التحكم", btn_logout: "خروج",
+                form_title_add: "إضافة صور جديدة", form_title_edit: "تعديل الصورة",
+                project_urls_label: "روابط الصور (URL)", project_urls_placeholder: "أضف رابط الصورة المباشر أو كود HTML (كل رابط بسطر)",
+                project_title_label: "عنوان الصورة (اختياري)", project_title_placeholder: "مثال: حملة إعلانات جوجل",
+                project_desc_label: "وصف الصورة (اختياري)", project_desc_placeholder: "وصف مختصر للصورة",
+                project_cat_label: "فئة الصورة (اختياري)", project_cat_placeholder: "ادخل فئة (مثال: إعلانات)",
+                checkbox_home: "عرض بالصفحة الرئيسية", note_home: "يتم عرض آخر 3 صور محددة فقط.",
+                btn_add: "إضافة الصور", btn_save: "حفظ التعديل",
+                list_title: "الصور الحالية", list_empty: "لا توجد صور حتى الآن.",
+                status_home: "ظاهر بالرئيسية", status_hidden: "مخفي بالرئيسية",
+                btn_edit: "تعديل", btn_delete: "حذف", link_image: "عرض الصورة",
+                alert_update_success: "تم تحديث الصورة بنجاح.", alert_add_success: "تم إضافة الصور بنجاح.",
+                alert_error: "حدث خطأ.", alert_confirm_delete: "هل أنت متأكد من حذف هذه الصورة؟",
+                alert_delete_success: "تم حذف الصورة بنجاح.", alert_delete_error: "حدث خطأ.",
+                dir: "rtl"
+            },
+            en: {
+                login_title: "Admin Login", login_p: "Enter admin account details.",
+                email_label: "Email", email_placeholder: "Enter your email",
+                password_label: "Password", password_placeholder: "Enter password",
+                btn_login: "Login", nav_title: "Dashboard", btn_logout: "Logout",
+                form_title_add: "Add New Images", form_title_edit: "Edit Image",
+                project_urls_label: "Image URLs", project_urls_placeholder: "Add direct image link or paste HTML code (one link per line)",
+                project_title_label: "Image Title (Optional)", project_title_placeholder: "e.g., Google Ads Campaign",
+                project_desc_label: "Image Description (Optional)", project_desc_placeholder: "Brief description of the image",
+                project_cat_label: "Category (Optional)", project_cat_placeholder: "Enter category (e.g., Marketing)",
+                checkbox_home: "Show on Homepage", note_home: "Only the last 3 selected images are shown.",
+                btn_add: "Add Images", btn_save: "Save Changes",
+                list_title: "Current Images", list_empty: "No images yet.",
+                status_home: "Featured", status_hidden: "Hidden",
+                btn_edit: "Edit", btn_delete: "Delete", link_image: "View Image",
+                alert_update_success: "Image updated successfully.", alert_add_success: "Images added successfully.",
+                alert_error: "An error occurred.", alert_confirm_delete: "Are you sure you want to delete this image?",
+                alert_delete_success: "Image deleted successfully.", alert_delete_error: "An error occurred.",
+                dir: "ltr"
+            }
+        };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDGZ-bm38jxRpGrMj8OrhrC939ZOYVDQbQ",
+            authDomain: "osama-omran.firebaseapp.com",
+            projectId: "osama-omran",
+            storageBucket: "osama-omran.firebasestorage.app",
+            messagingSenderId: "938044424805",
+            appId: "1:938044424805:web:be554595d4baee0fb97c8c",
+            measurementId: "G-BE4TKL720R"
+        };
+        const ADMIN_EMAIL = 'osamatarsh9@gmail.com';
+        const appId = 'default-app-id';
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        let userId = null;
+        const portfolioCollectionPath = `artifacts/${appId}/public/data/portfolio_items`;
+        let editMode = false;
+        let currentEditId = null;
+        const loginScreen = document.getElementById('login-screen');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+        const loginForm = document.getElementById('login-form');
+        const projectForm = document.getElementById('project-form');
+        const projectList = document.getElementById('project-list');
+        const addProjectButton = document.getElementById('add-project-btn');
+
+        let currentLang = localStorage.getItem('admin_lang') || 'ar';
+        const langSwitcher = document.createElement('button');
+        langSwitcher.className = 'bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded-lg text-sm';
+        langSwitcher.textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+        langSwitcher.addEventListener('click', () => {
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('admin_lang', newLang);
+            window.location.reload();
+        });
+        document.body.prepend(langSwitcher);
+        
+        function updateContent() {
+            const content = languageContent[currentLang];
+            document.documentElement.lang = currentLang;
+            document.body.dir = content.dir;
+            document.title = content.nav_title;
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                el.textContent = content[key];
+            });
+            document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-translate-placeholder');
+                el.placeholder = content[key];
+            });
+            langSwitcher.textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+        }
+        updateContent();
+        
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('email-input').value;
+            const passwordInput = document.getElementById('password-input').value;
+            if (emailInput !== ADMIN_EMAIL) {
+                alert(languageContent[currentLang].error_admin_email);
+                return;
+            }
+            try {
+                await signInWithEmailAndPassword(auth, emailInput, passwordInput);
+            } catch (error) {
+                alert(languageContent[currentLang].error_login_fail);
+            }
+        });
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await signOut(auth);
+        });
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.email === ADMIN_EMAIL) {
+                userId = user.uid;
+                loginScreen.classList.add('hidden');
+                dashboardScreen.classList.remove('hidden');
+                setupPortfolioListener();
+            } else {
+                userId = null;
+                loginScreen.classList.remove('hidden');
+                dashboardScreen.classList.add('hidden');
+            }
+        });
+
+        function extractDirectImageUrls(input) {
+            // Extracts links that look like direct URLs OR extracts src from <img> tags
+            const directUrlRegex = /(https?:\/\/[^\s]+\.(?:jpe?g|png|gif|webp|svg))/gi;
+            const imgTagRegex = /<img.*?src="(.*?)"/gi;
+            
+            let urls = [];
+
+            // 1. Check for direct URLs (one per line or mixed)
+            input.split('\n').forEach(line => {
+                let match = line.match(directUrlRegex);
+                if (match) {
+                    urls.push(...match);
+                }
+            });
+
+            // 2. Extract URLs from <img> tags (handles pasted HTML code like ibb.co)
+            let matches = [...input.matchAll(imgTagRegex)];
+            urls = urls.concat(matches.map(match => match[1].trim()));
+
+            // Filter out duplicates and ensure only unique, clean URLs remain
+            return [...new Set(urls)].filter(url => url.trim() !== '');
+        }
+
+        function setupPortfolioListener() {
+            if (!userId) return;
+            const q = query(collection(db, portfolioCollectionPath));
+            onSnapshot(q, (snapshot) => {
+                renderProjects(snapshot.docs);
+            });
+        }
+        function renderProjects(docs) {
+            projectList.innerHTML = '';
+            const content = languageContent[currentLang];
+            if (docs.length === 0) {
+                projectList.innerHTML = `<p class="text-gray-500 mt-2">${content.list_empty}</p>`;
+                return;
+            }
+            docs.forEach(doc => {
+                const data = doc.data();
+                const id = doc.id;
+                const projectItem = document.createElement('div');
+                projectItem.className = 'flex flex-col md:flex-row justify-between items-center p-3 bg-white rounded-lg shadow-md border-r-4 transition duration-300 hover:shadow-lg mb-2 ' + (data.showOnHome ? 'border-green-600' : 'border-gray-400');
+                const statusText = data.showOnHome ? content.status_home : content.status_hidden;
+                const statusClass = data.showOnHome ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-700';
+                const title = data.title || 'بلا عنوان';
+                const category = data.category || 'غير محدد';
+                const desc = data.description || 'بلا وصف';
+                projectItem.innerHTML = `
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <img src="${data.imageUrl}" alt="Project Image" class="w-16 h-16 object-cover rounded-md border">
+                        <div>
+                            <h4 class="text-base font-bold text-amber-900">${title}</h4>
+                            <p class="text-xs text-gray-700 truncate w-full">${desc}</p>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full inline-block mt-1">${category}</span>
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full inline-block ${statusClass}">
+                                ${statusText}
+                            </span>
+                            <a href="${data.imageUrl}" target="_blank" class="text-xs text-blue-500 hover:text-blue-700 block mt-1">${content.link_image}</a>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse mt-2 md:mt-0">
+                        <button data-id="${id}" data-url="${data.imageUrl}" data-home="${data.showOnHome || false}" data-title="${data.title || ''}" data-desc="${data.description || ''}" data-category="${data.category || ''}" class="edit-btn bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded-full transition duration-150 text-xs">${content.btn_edit}</button>
+                        <button data-id="${id}" class="delete-btn bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full transition duration-150 text-xs">${content.btn_delete}</button>
+                    </div>
+                `;
+                projectList.appendChild(projectItem);
+            });
+            document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', handleEdit));
+            document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', handleDelete));
+        }
+
+        projectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const content = languageContent[currentLang];
+            
+            const urlsInput = document.getElementById('imageUrls').value;
+
+            // Common data
+            const title = document.getElementById('title').value || '';
+            const description = document.getElementById('description').value || '';
+            const category = document.getElementById('category').value || '';
+            const showOnHome = document.getElementById('showOnHome').checked;
+
+            let imageUrlsToSave = [];
+            
+            // Step 1: Handle Batch URL / HTML Code Input
+            if (urlsInput) {
+                imageUrlsToSave = extractDirectImageUrls(urlsInput);
+            }
+            
+            if (imageUrlsToSave.length === 0) {
+                alert("الرجاء إضافة رابط صورة واحد على الأقل.");
+                return;
+            }
+
+            try {
+                if (editMode && currentEditId) {
+                    // Update mode - takes the first available URL (uploaded file or first text link)
+                    const docRef = doc(db, portfolioCollectionPath, currentEditId);
+                    const updatedData = { imageUrl: imageUrlsToSave[0], title, description, category, showOnHome };
+                    await updateDoc(docRef, updatedData);
+                    alert(content.alert_update_success);
+                } else {
+                    // Batch Add mode
+                    for (const url of imageUrlsToSave) {
+                        const projectData = { imageUrl: url, title, description, category, showOnHome };
+                        await addDoc(collection(db, portfolioCollectionPath), projectData);
+                    }
+                    alert(content.alert_add_success);
+                }
+                projectForm.reset();
+                editMode = false;
+                currentEditId = null;
+                document.getElementById('imageUrls').setAttribute('rows', '3');
+                addProjectButton.textContent = content.btn_add;
+                document.getElementById('form-title').textContent = content.form_title_add;
+            } catch (error) {
+                console.error("Error in operation:", error);
+                alert(content.alert_error);
+            }
+        });
+
+        function handleEdit(e) {
+            const btn = e.target;
+            const content = languageContent[currentLang];
+            currentEditId = btn.dataset.id;
+            
+            // Set the single URL for editing
+            document.getElementById('imageUrls').value = btn.dataset.url;
+            document.getElementById('title').value = btn.dataset.title === 'بلا عنوان' ? '' : btn.dataset.title; // Fix: Clear placeholder if stored
+            document.getElementById('description').value = btn.dataset.desc === 'بلا وصف' ? '' : btn.dataset.desc; // Fix: Clear placeholder if stored
+            document.getElementById('category').value = btn.dataset.category === 'غير محدد' ? '' : btn.dataset.category; // Fix: Clear placeholder if stored
+            document.getElementById('showOnHome').checked = btn.dataset.home === 'true';
+            
+            // Adjust textarea for single edit URL
+            document.getElementById('imageUrls').setAttribute('rows', '1');
+            document.getElementById('imageUrls').placeholder = 'رابط الصورة الحالي';
+
+            editMode = true;
+            document.getElementById('form-title').textContent = content.form_title_edit;
+            addProjectButton.textContent = content.btn_save;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        document.getElementById('add-project-btn').addEventListener('click', () => {
+            // Ensure UI is clean before starting batch add
+            if (!editMode) {
+                document.getElementById('imageUrls').setAttribute('rows', '3');
+                document.getElementById('imageUrls').placeholder = languageContent[currentLang].project_urls_placeholder;
+            }
+        });
+
+
+        // Handle Form Reset on Edit Completion (Back to Batch Add mode)
+        document.getElementById('dashboard-screen').addEventListener('click', (e) => {
+            if (e.target.tagName === 'NAV' || e.target.id === 'logout-btn') return;
+            if (editMode && e.target.id !== 'add-project-btn' && !e.target.closest('#project-form')) {
+                const content = languageContent[currentLang];
+                // Reset form UI to batch add state
+                projectForm.reset();
+                editMode = false;
+                currentEditId = null;
+                document.getElementById('imageUrls').setAttribute('rows', '3');
+                document.getElementById('imageUrls').placeholder = content.project_urls_placeholder;
+                addProjectButton.textContent = content.btn_add;
+                document.getElementById('form-title').textContent = content.form_title_add;
+            }
+        });
+
+        async function handleDelete(e) {
+            const id = e.target.dataset.id;
+            const content = languageContent[currentLang];
+            if (window.confirm(content.alert_confirm_delete)) {
+                try {
+                    await deleteDoc(doc(db, portfolioCollectionPath, id));
+                    alert(content.alert_delete_success);
+                } catch (error) {
+                    alert(content.alert_delete_error);
+                }
+            }
+        }
+    </script>
+    <body class="bg-gray-100 min-h-screen">
+        <div id="login-screen" class="flex items-center justify-center min-h-screen">
+            <div class="w-full max-w-md bg-white p-6 rounded-xl shadow-2xl">
+                <h2 class="text-2xl font-extrabold text-center text-amber-900 mb-4" data-translate="login_title">تسجيل الدخول</h2>
+                <p class="text-center text-gray-600 mb-6 text-sm" data-translate="login_p">أدخل بيانات حساب المشرف.</p>
+                <form id="login-form">
+                    <div class="mb-3">
+                        <label for="email-input" class="block text-sm font-medium text-gray-700 mb-1" data-translate="email_label">البريد الإلكتروني</label>
+                        <input type="email" id="email-input" required class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm" data-translate-placeholder="email_placeholder" placeholder="أدخل بريدك الإلكتروني">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password-input" class="block text-sm font-medium text-gray-700 mb-1" data-translate="password_label">كلمة المرور</label>
+                        <input type="password" id="password-input" required class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm" data-translate-placeholder="password_placeholder" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-lg text-sm" data-translate="btn_login">دخول</button>
+                </form>
+            </div>
+        </div>
+        
+        <div id="dashboard-screen" class="hidden">
+            <nav class="bg-amber-700 p-3 shadow-lg sticky top-0 z-10">
+                <div class="container mx-auto flex justify-between items-center">
+                    <h1 class="text-lg font-bold text-white" data-translate="nav_title">لوحة التحكم</h1>
+                    <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1.5 px-3 rounded-full text-xs" data-translate="btn_logout">خروج</button>
+                </div>
+            </nav>
+        
+            <main class="container mx-auto p-4">
+                <div class="bg-white p-4 rounded-xl shadow-xl mb-6">
+                    <h2 id="form-title" class="text-xl font-bold text-amber-900 mb-4" data-translate="form_title_add">إضافة صور جديدة</h2>
+                    <form id="project-form" class="space-y-3">
+                        
+                        <!-- BATCH URL / TEXT AREA SECTION -->
+                        <div>
+                            <label for="imageUrls" class="block text-sm font-medium text-gray-700 mb-1" data-translate="project_urls_label">روابط الصور (URL)</label>
+                            <textarea id="imageUrls" rows="3" required class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm" data-translate-placeholder="project_urls_placeholder" placeholder="أضف كل رابط في سطر جديد"></textarea>
+                        </div>
+                        <p class="text-xs text-blue-500">ملاحظة: يمكنك لصق كود HTML لصور ibb.co/yourimageshare.com وسنقوم باستخراج رابط الصورة المباشر تلقائيًا.</p>
+                        
+                        <!-- OPTIONAL FIELDS -->
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1" data-translate="project_title_label">عنوان الصورة (اختياري)</label>
+                            <input type="text" id="title" class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm" data-translate-placeholder="project_title_placeholder" placeholder="مثال: حملة إعلانات جوجل">
+                        </div>
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1" data-translate="project_desc_label">وصف الصورة (اختياري)</label>
+                            <textarea id="description" class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm" data-translate-placeholder="project_desc_placeholder" placeholder="وصف مختصر للصورة"></textarea>
+                        </div>
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1" data-translate="project_cat_label">فئة الصورة (اختياري)</label>
+                            <input type="text" id="category" class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-sm" data-translate-placeholder="project_cat_placeholder" placeholder="ادخل فئة (مثال: إعلانات)">
+                        </div>
+                        
+                        <div class="flex items-center space-x-2 space-x-reverse pt-1">
+                            <input type="checkbox" id="showOnHome" class="h-4 w-4 text-amber-600 border-gray-300 rounded">
+                            <label for="showOnHome" class="text-sm font-medium text-gray-700" data-translate="checkbox_home">عرض بالصفحة الرئيسية</label>
+                        </div>
+                        <p class="text-xs text-red-500" data-translate="note_home">يتم عرض آخر 3 صور محددة فقط.</p>
+        
+                        <button id="add-project-btn" type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 rounded-lg text-sm" data-translate="btn_add">إضافة الصور</button>
+                    </form>
+                </div>
+        
+                <div class="bg-white p-4 rounded-xl shadow-xl">
+                    <h2 class="text-xl font-bold text-amber-900 mb-4" data-translate="list_title">الصور الحالية</h2>
+                    <div id="project-list" class="space-y-2"></div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

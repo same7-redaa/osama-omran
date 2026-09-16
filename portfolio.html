@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بروفايل اسامة جروب للتسويق الالكتروني | أسامة عمران أحمد</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/XvYnZFWC/1.png">
+    <link rel="stylesheet" type="text/css" href="https://www.fontstatic.com/f=flat-jooza" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="page-container">
+    <div class="content-wrap">
+        <header id="main-header" class="scrolled">
+            <nav class="navbar-scroll">
+                <a href="index.html#hero-section" class="logo">
+                    <img src="https://i.postimg.cc/XvYnZFWC/1.png" alt="Favicon Logo" class="favicon-img">
+                    <span class="logo-name" data-translate="name">أسامة عمران أحمد</span>
+                </a>
+                <div class="header-controls">
+                    <ul class="nav-links desktop-links">
+                        <li><a href="index.html#hero-section" data-translate="menu_home">الرئيسية</a></li>
+                        <li><a href="index.html#about" data-translate="menu_about">من أنا</a></li>
+                        <li><a href="index.html#services" data-translate="menu_services">خدماتي</a></li>
+                        <li><a href="#top" data-translate="menu_portfolio">بروفايل اسامة جروب للتسويق الالكتروني</a></li>
+                        <li><a href="articles.html" data-translate="menu_articles">المقالات</a></li>
+                        <li><a href="index.html#testimonials" data-translate="menu_testimonials">آراء العملاء</a></li>
+                        <li><a href="index.html#contact" data-translate="menu_contact">تواصل معي</a></li>
+                    </ul>
+                    <button id="lang-switcher" class="lang-switcher" data-lang="en">EN</button>
+                    <button id="hamburger-btn" class="hamburger-btn" aria-label="فتح القائمة"><i class="fas fa-bars"></i></button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Full Screen Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="إغلاق القائمة">&times;</button>
+            <div class="mobile-menu-content">
+                <div class="mobile-menu-logo">
+                    <img src="https://i.postimg.cc/XvYnZFWC/1.png" alt="Logo" class="favicon-img">
+                    <span data-translate="name">أسامة عمران أحمد</span>
+                </div>
+                <ul class="mobile-nav-links">
+                    <li><a href="index.html#hero-section" data-translate="menu_home" onclick="closeMobileMenu()"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="index.html#about" data-translate="menu_about" onclick="closeMobileMenu()"><i class="fas fa-user"></i> من أنا</a></li>
+                    <li><a href="index.html#services" data-translate="menu_services" onclick="closeMobileMenu()"><i class="fas fa-concierge-bell"></i> خدمتي</a></li>
+                    <li><a href="#top" data-translate="menu_portfolio" onclick="closeMobileMenu()"><i class="fas fa-briefcase"></i> بروفايل اسامة جروب للتسويق الالكتروني</a></li>
+                    <li><a href="articles.html" data-translate="menu_articles" onclick="closeMobileMenu()"><i class="fas fa-newspaper"></i> المقالات</a></li>
+                    <li><a href="index.html#testimonials" data-translate="menu_testimonials" onclick="closeMobileMenu()"><i class="fas fa-comments"></i> آراء العملاء</a></li>
+                    <li><a href="index.html#contact" data-translate="menu_contact" onclick="closeMobileMenu()"><i class="fas fa-envelope"></i> تواصل معي</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="portfolio-header">
+            <h1 data-translate="page_title">بروفايل اسامة جروب للتسويق الالكتروني</h1>
+        </div>
+
+        <main class="pdf-viewer-container">
+            <!-- Toolbar -->
+            <div class="pdf-toolbar">
+                <div class="pdf-toolbar-info">
+                    <i class="fas fa-file-pdf"></i>
+                    <span data-translate="pdf_title">كتالوج وأعمال أسامة جروب (75 صفحة)</span>
+                </div>
+                <div class="pdf-toolbar-actions">
+                    <span id="page-counter" style="font-size: 0.88rem; opacity: 0.9;">75 صفحة</span>
+                    <button id="toggle-grid-btn" class="pdf-toolbar-btn">
+                        <i class="fas fa-th-large"></i> <span data-translate="btn_grid_toggle">تغيير العرض</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PDF Pages Flow Container -->
+            <div id="pdf-pages-container" class="pdf-document-flow">
+                <!-- Pages will be dynamically rendered here -->
+            </div>
+        </main>
+    </div>
+    
+    <a href="https://wa.me/+201095678392" target="_blank" class="floating-whatsapp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <div class="footer-container">
+            <p class="copyright-text">&copy; 2024 <a href="index.html#hero-section" class="footer-name-link" data-translate="name_footer">أسامة عمران أحمد</a>. <span data-translate="all_rights">جميع الحقوق محفوظة.</span></p>
+            <p class="developer-info">
+                <span data-translate="dev_text">تم التصميم والتطوير بواسطة: سامح رضا</span>
+                <span class="dev-icons">
+                    <a href="https://wa.me/+201023160657" target="_blank" class="dev-social-icon" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/19aT46qpYU/" target="_blank" class="dev-social-icon" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const totalPages = 75;
+        const pdfPages = Array.from({length: totalPages}, (_, i) => `pdf_images/page_${i+1}.png`);
+        let currentLightboxIndex = 0;
+        let isGridView = false;
+
+        const languageContent = {
+            ar: {
+                name: "أسامة عمران أحمد", page_title: "بروفايل اسامة جروب للتسويق الالكتروني", menu_home: "الرئيسية", menu_about: "من أنا", menu_services: "خدماتي", menu_portfolio: "بروفايل اسامة جروب للتسويق الالكتروني", menu_articles: "المقالات", menu_testimonials: "آراء العملاء", menu_contact: "تواصل معي",
+                pdf_title: "كتالوج وأعمال <a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">أسامة جروب للتسويق الإلكتروني</a> (75 صفحة)", btn_grid_toggle: "طريقة العرض",
+                name_footer: "أسامة عمران أحمد", all_rights: "جميع الحقوق محفوظة لـ <a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">أسامة جروب</a>.",
+                dev_text: "تم التصميم والتطوير بواسطة: سامح رضا", dir: "rtl",
+                page_label: "صفحة"
+            },
+            en: {
+                name: "Osama Omran Ahmed", page_title: "Osama Group Profile", menu_home: "Home", menu_about: "About Me", menu_services: "Services", menu_portfolio: "Osama Group Profile", menu_articles: "Articles", menu_testimonials: "Client Reviews", menu_contact: "Contact",
+                pdf_title: "<a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">Osama Group for E-Marketing</a> Catalog (75 Pages)", btn_grid_toggle: "Switch View",
+                name_footer: "Osama Omran Ahmed", all_rights: "All Rights Reserved for <a href=\"https://osamagroupeg.com/\" target=\"_blank\" rel=\"noopener\" class=\"seo-backlink\">Osama Group</a>.",
+                dev_text: "Designed and Developed by: Sameh Reda", dir: "ltr",
+                page_label: "Page"
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'ar';
+        const langSwitcher = document.getElementById('lang-switcher');
+        
+        function updateContent(lang) {
+            const content = languageContent[lang];
+            document.documentElement.lang = lang;
+            document.body.dir = content.dir;
+            document.title = (lang === 'ar' ? 'بروفايل اسامة جروب للتسويق الالكتروني' : 'Osama Group Profile') + " | " + content.name;
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (content[key]) {
+                    if (content[key].includes('<a ')) {
+                        el.innerHTML = content[key];
+                    } else {
+                        el.textContent = content[key];
+                    }
+                }
+            });
+            langSwitcher.textContent = lang === 'ar' ? 'EN' : 'عربي';
+            langSwitcher.setAttribute('data-lang', lang === 'ar' ? 'en' : 'ar');
+            localStorage.setItem('lang', lang);
+            currentLang = lang;
+            renderPdfPages();
+        }
+
+        function initMobileMenu() {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const closeBtn = document.getElementById('mobile-menu-close');
+            const overlay = document.getElementById('mobile-menu-overlay');
+
+            if (hamburgerBtn && overlay) {
+                hamburgerBtn.addEventListener('click', () => {
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            if (closeBtn && overlay) {
+                closeBtn.addEventListener('click', closeMobileMenu);
+            }
+        }
+
+        function closeMobileMenu() {
+            const overlay = document.getElementById('mobile-menu-overlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+            initMobileMenu();
+            updateContent(currentLang);
+            langSwitcher.addEventListener('click', (e) => {
+                const nextLang = e.target.getAttribute('data-lang');
+                updateContent(nextLang);
+            });
+            createLightbox();
+        });
+
+        const pagesContainer = document.getElementById('pdf-pages-container');
+        const toggleGridBtn = document.getElementById('toggle-grid-btn');
+
+        toggleGridBtn.addEventListener('click', () => {
+            isGridView = !isGridView;
+            if (isGridView) {
+                pagesContainer.className = 'portfolio-full-grid';
+                pagesContainer.style.maxWidth = '1200px';
+            } else {
+                pagesContainer.className = 'pdf-document-flow';
+                pagesContainer.style.maxWidth = '950px';
+            }
+            renderPdfPages();
+        });
+
+        function renderPdfPages() {
+            pagesContainer.innerHTML = '';
+            const pageText = languageContent[currentLang].page_label || 'Page';
+
+            pdfPages.forEach((src, idx) => {
+                const card = document.createElement('div');
+                card.className = isGridView ? 'portfolio-full-item' : 'pdf-page-card';
+                card.innerHTML = `
+                    <span class="pdf-page-badge">${pageText} ${idx + 1} / ${totalPages}</span>
+                    <img src="${src}" alt="${pageText} ${idx + 1}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/800x450/4A2C2A/FFFFFF?text=Page+${idx+1}'">
+                `;
+                card.addEventListener('click', () => {
+                    openLightbox(idx);
+                });
+                pagesContainer.appendChild(card);
+            });
+        }
+
+        // --- Lightbox with Prev / Next Navigation ---
+        function createLightbox() {
+            if (document.getElementById('lightbox')) return;
+            const lightboxHTML = `
+                <div id="lightbox" class="lightbox-overlay">
+                    <span class="lightbox-close">&times;</span>
+                    <button class="lightbox-nav lightbox-prev" id="lb-prev">&lang;</button>
+                    <div class="lightbox-content">
+                        <img src="" class="lightbox-image">
+                        <div class="lightbox-caption" id="lb-caption"></div>
+                    </div>
+                    <button class="lightbox-nav lightbox-next" id="lb-next">&rang;</button>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', lightboxHTML);
+
+            const lightbox = document.getElementById('lightbox');
+            const closeBtn = lightbox.querySelector('.lightbox-close');
+            const prevBtn = document.getElementById('lb-prev');
+            const nextBtn = document.getElementById('lb-next');
+
+            const closeLightbox = () => lightbox.classList.remove('visible');
+
+            closeBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (currentLightboxIndex > 0) {
+                    openLightbox(currentLightboxIndex - 1);
+                } else {
+                    openLightbox(totalPages - 1);
+                }
+            });
+
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (currentLightboxIndex < totalPages - 1) {
+                    openLightbox(currentLightboxIndex + 1);
+                } else {
+                    openLightbox(0);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('visible')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') prevBtn.click();
+                if (e.key === 'ArrowRight') nextBtn.click();
+            });
+        }
+
+        function openLightbox(index) {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox) return;
+            currentLightboxIndex = index;
+            const pageText = languageContent[currentLang].page_label || 'Page';
+            lightbox.querySelector('.lightbox-image').src = pdfPages[index];
+            document.getElementById('lb-caption').textContent = `${pageText} ${index + 1} / ${totalPages}`;
+            lightbox.classList.add('visible');
+        }
+    </script>
+</body>
+</html>
