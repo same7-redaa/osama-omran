@@ -673,6 +673,21 @@
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') prevTestimonialLightbox();
             if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') nextTestimonialLightbox();
         });
+
+        // Instant Page Prefetching for Blazing Fast Navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('a[href]').forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    const href = link.getAttribute('href');
+                    if (href && href.endsWith('.html') && !document.querySelector(`link[rel="prefetch"][href="${href}"]`)) {
+                        const p = document.createElement('link');
+                        p.rel = 'prefetch';
+                        p.href = href;
+                        document.head.appendChild(p);
+                    }
+                }, { once: true });
+            });
+        });
     </script>
 </body>
 </html>
